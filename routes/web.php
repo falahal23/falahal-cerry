@@ -17,7 +17,7 @@ Route::get('/mahasiswa', function () {
 
 Route::get('/nama/{param1}', function ($param1 = '') {
     return 'Nama saya: '.$param1;
-});
+})->name('route.about');
 
 route::get('/mahasiswa/{param1}', [MahasiswaController::class,'show']);
 
