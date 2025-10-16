@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'flhl';
+    src: url('assets/fonts/font.ttf');
+}
+
+.font-flhl{
+    font-family: 'flhl';
+}
