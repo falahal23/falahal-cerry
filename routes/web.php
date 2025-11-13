@@ -42,7 +42,9 @@ Route::get('/home',[HomeController::class,'index']);
 route::get('dashboard', [DashboardController::class,'index'])
         ->name('dashboard');
 
-        Route::resource('pelanggan', PelangganController::class);
+Route::resource('pelanggan', PelangganController::class);
+
+Route::get('/pelanggan',[PelangganController::class,'index']);
 
 route:: resource('user', UserController::class);
 
