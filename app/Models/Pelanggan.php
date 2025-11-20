@@ -1,21 +1,42 @@
 <?php
-
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Pelanggan extends Model
 {
-    protected $table ='pelanggan';
-    protected $primaryKey ='pelanggan_id';
-    protected $fillable =[
+    protected $table      = 'pelanggan';
+    protected $primaryKey = 'pelanggan_id';
+    protected $fillable   = [
         'first_name',
         'last_name',
         'birthday',
         'gender',
         'email',
-        'phone'
+        'phone',
     ];
+
+    public function scopeFilter(Builder $query, $request, array $filterableColumns): Builder
+    {
+        foreach ($filterableColumns as $column) {
+            if ($request->filled($column)) {
+                $query->where($column, $request->input($column));
+            }
+        }
+        return $query;
+    }
+
+    public function scopeSearch(Builder $query, $request, $searchableColumns)
+    {
+        $searchTerm = $request->query('search');
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm, $searchableColumns) {
+                foreach ($searchableColumns as $column) {
+                    $query->orWhere($column, 'like', '%' . $searchTerm . '%');
+                }
+            });
+        }
+    }
 }
-
-
