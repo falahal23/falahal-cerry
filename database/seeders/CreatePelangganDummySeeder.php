@@ -1,0 +1,36 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Faker\Factory;
+
+class CreatePelangganDummySeeder extends Seeder
+{
+    /**
+     * Jumlah pelanggan yang ingin dibuat
+     */
+    private $totalPelanggan = 100; // Ganti angka ini sesuai kebutuhan
+
+    /**
+     * Run the database seeds.
+     */
+    public function run()
+    {
+        $faker = Factory::create('id_ID'); // Locale Indonesia
+
+        foreach (range(1, $this->totalPelanggan) as $index) {
+            DB::table('pelanggan')->insert([
+                'first_name' => $faker->firstName,
+                'last_name'  => $faker->lastName,
+                'birthday'   => $faker->date('Y-m-d', '2005-12-31'),
+                'gender'     => $faker->randomElement(['Male', 'Female', 'Other']),
+                'email'      => $faker->unique()->safeEmail,
+                'phone'      => $faker->phoneNumber,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+    }
+}
